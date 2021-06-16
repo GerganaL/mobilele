@@ -1,6 +1,5 @@
 package bg.softuni.lection2.mobilele.model.view;
 
-import bg.softuni.lection2.mobilele.model.entites.BrandEntity;
 import bg.softuni.lection2.mobilele.model.entites.enums.ModelCategoryEnum;
 
 public class ModelViewModel {

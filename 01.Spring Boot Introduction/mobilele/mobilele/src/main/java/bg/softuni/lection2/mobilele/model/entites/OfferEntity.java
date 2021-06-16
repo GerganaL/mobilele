@@ -3,6 +3,7 @@ import bg.softuni.lection2.mobilele.model.entites.enums.EngineEnum;
 import bg.softuni.lection2.mobilele.model.entites.enums.TransmitionEnum;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "offers")
@@ -11,15 +12,16 @@ public class OfferEntity extends BaseEntity {
     private EngineEnum engine;
     private String imageUrl;
     private int mileage;
-    private int price;
+    private BigDecimal price;
     private int year;
+    private String description;
     @Enumerated(EnumType.STRING)
     private TransmitionEnum transmission;
     @ManyToOne
     private ModelEntity model;
 
-    @ManyToOne
-    private UserEntity user;
+//    @ManyToOne
+//    private UserEntity user;
 
     public EngineEnum getEngine() {
         return engine;
@@ -48,11 +50,11 @@ public class OfferEntity extends BaseEntity {
         return this;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public OfferEntity setPrice(int price) {
+    public OfferEntity setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
@@ -63,6 +65,15 @@ public class OfferEntity extends BaseEntity {
 
     public OfferEntity setYear(int year) {
         this.year = year;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public OfferEntity setDescription(String description) {
+        this.description = description;
         return this;
     }
 
@@ -83,15 +94,16 @@ public class OfferEntity extends BaseEntity {
         this.model = model;
         return this;
     }
+    //TODO: uncomment the user
 
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public OfferEntity setUser(UserEntity user) {
-        this.user = user;
-        return this;
-    }
+//    public UserEntity getUser() {
+//        return user;
+//    }
+//
+//    public OfferEntity setUser(UserEntity user) {
+//        this.user = user;
+//        return this;
+//    }
 
     @Override
     public String toString() {
@@ -101,9 +113,10 @@ public class OfferEntity extends BaseEntity {
                 ", mileage=" + mileage +
                 ", price=" + price +
                 ", year=" + year +
+                ", description=" + description +
                 ", transmission=" + transmission +
                 ", model=" + model +
-                ", user=" + user +
+//                ", user=" + user +
                 "} " + super.toString();
     }
 }

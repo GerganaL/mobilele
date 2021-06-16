@@ -3,13 +3,18 @@ package bg.softuni.lection2.mobilele;
 import bg.softuni.lection2.mobilele.model.entites.BaseEntity;
 import bg.softuni.lection2.mobilele.model.entites.BrandEntity;
 import bg.softuni.lection2.mobilele.model.entites.ModelEntity;
+import bg.softuni.lection2.mobilele.model.entites.OfferEntity;
+import bg.softuni.lection2.mobilele.model.entites.enums.EngineEnum;
 import bg.softuni.lection2.mobilele.model.entites.enums.ModelCategoryEnum;
+import bg.softuni.lection2.mobilele.model.entites.enums.TransmitionEnum;
 import bg.softuni.lection2.mobilele.repository.BrandRepository;
 import bg.softuni.lection2.mobilele.repository.ModelRepository;
+import bg.softuni.lection2.mobilele.repository.OfferRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
@@ -18,10 +23,12 @@ public class DBInit implements CommandLineRunner {
 
     private final ModelRepository modelRepository;
     private final BrandRepository brandRepository;
+    private final OfferRepository offerRepository;
 
-    public DBInit(ModelRepository modelRepository, BrandRepository brandRepository) {
+    public DBInit(ModelRepository modelRepository, BrandRepository brandRepository, OfferRepository offerRepository) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
+        this.offerRepository = offerRepository;
     }
 
 
@@ -37,9 +44,25 @@ public class DBInit implements CommandLineRunner {
 
         brandRepository.saveAll(List.of(fordBrand, hondaBrand));
 
-      initFiesta(fordBrand);
-      initEscort(fordBrand);
+        ModelEntity fiestaModel = initFiesta(fordBrand);
+        initEscort(fordBrand);
       initNC750S(hondaBrand);
+      createFiestaOffer(fiestaModel);
+    }
+
+    private void createFiestaOffer(ModelEntity model){
+        OfferEntity fiestaOffer = new OfferEntity();
+        fiestaOffer.setEngine(EngineEnum.GASOLINE)
+                .setImageUrl("https://media.autoexpress.co.uk/image/private/s--X-WVjvBW--/f_auto,t_content-image-full-desktop@1/v1562244788/autoexpress/2017/07/dsc_1328-1.jpg")
+                .setMileage(40000)
+                .setPrice(BigDecimal.valueOf(10000))
+                .setYear(2019)
+                .setDescription("Karana e ot nemska baba. Zimata v garaj")
+                .setTransmission(TransmitionEnum.MANUAL)
+                .setModel(model);
+        setCurrentTimestamps(fiestaOffer);
+
+        offerRepository.save(fiestaOffer);
     }
 
     private ModelEntity initFiesta(BrandEntity brand) {
