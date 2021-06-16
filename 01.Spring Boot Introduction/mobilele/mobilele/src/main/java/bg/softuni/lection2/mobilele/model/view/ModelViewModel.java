@@ -1,11 +1,15 @@
 package bg.softuni.lection2.mobilele.model.view;
 
-import java.util.List;
+import bg.softuni.lection2.mobilele.model.entites.BrandEntity;
+import bg.softuni.lection2.mobilele.model.entites.enums.ModelCategoryEnum;
 
 public class ModelViewModel {
 
-    private  String name;
-    private List<ModelViewModel> models;
+    private String name;
+    private ModelCategoryEnum category;
+    private String imageUrl;
+    private Integer startYear;
+    private Integer endYear;
 
     public String getName() {
         return name;
@@ -16,12 +20,39 @@ public class ModelViewModel {
         return this;
     }
 
-    public List<ModelViewModel> getModels() {
-        return models;
+    public ModelCategoryEnum getCategory() {
+        return category;
     }
 
-    public ModelViewModel setModels(List<ModelViewModel> models) {
-        this.models = models;
+    public ModelViewModel setCategory(ModelCategoryEnum category) {
+        this.category = category;
+        return this;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public ModelViewModel setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public Integer getStartYear() {
+        return startYear;
+    }
+
+    public ModelViewModel setStartYear(Integer startYear) {
+        this.startYear = startYear;
+        return this;
+    }
+
+    public Integer getEndYear() {
+        return endYear;
+    }
+
+    public ModelViewModel setEndYear(Integer endYear) {
+        this.endYear = endYear;
         return this;
     }
 
@@ -29,7 +60,10 @@ public class ModelViewModel {
     public String toString() {
         return "ModelViewModel{" +
                 "name='" + name + '\'' +
-                ", models=" + models +
+                ", category=" + category +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", startYear=" + startYear +
+                ", endYear=" + endYear +
                 '}';
     }
 }
