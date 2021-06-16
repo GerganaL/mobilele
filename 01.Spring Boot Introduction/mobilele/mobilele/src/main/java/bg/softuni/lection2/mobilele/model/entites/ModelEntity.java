@@ -1,9 +1,8 @@
-package bg.softuni.lection2.mobilele.entites;
+package bg.softuni.lection2.mobilele.model.entites;
 
-import bg.softuni.lection2.mobilele.entites.enums.ModelCategoryEnum;
+import bg.softuni.lection2.mobilele.model.entites.enums.ModelCategoryEnum;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "models")

@@ -1,4 +1,4 @@
-package bg.softuni.lection2.mobilele.entites;
+package bg.softuni.lection2.mobilele.model.entites;
 
 import javax.persistence.*;
 import java.time.Instant;

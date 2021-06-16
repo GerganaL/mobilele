@@ -1,7 +1,6 @@
-package bg.softuni.lection2.mobilele.entites;
-import bg.softuni.lection2.mobilele.entites.enums.EngineEnum;
-import bg.softuni.lection2.mobilele.entites.enums.TransmitionEnum;
-import org.springframework.ui.Model;
+package bg.softuni.lection2.mobilele.model.entites;
+import bg.softuni.lection2.mobilele.model.entites.enums.EngineEnum;
+import bg.softuni.lection2.mobilele.model.entites.enums.TransmitionEnum;
 
 import javax.persistence.*;
 
@@ -19,7 +18,8 @@ public class OfferEntity extends BaseEntity {
     @ManyToOne
     private ModelEntity model;
 
-    //TODO - seller
+    @ManyToOne
+    private UserEntity user;
 
     public EngineEnum getEngine() {
         return engine;
@@ -84,6 +84,15 @@ public class OfferEntity extends BaseEntity {
         return this;
     }
 
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public OfferEntity setUser(UserEntity user) {
+        this.user = user;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "OfferEntity{" +
@@ -94,6 +103,7 @@ public class OfferEntity extends BaseEntity {
                 ", year=" + year +
                 ", transmission=" + transmission +
                 ", model=" + model +
+                ", user=" + user +
                 "} " + super.toString();
     }
 }
