@@ -14,7 +14,7 @@ public class BaseEntity {
     private Instant created;
 
     @Column(nullable = false)
-    private Instant modified;
+    private Instant updated;
 
     public Long getId() {
         return id;
@@ -24,8 +24,8 @@ public class BaseEntity {
         return created;
     }
 
-    public Instant getModified() {
-        return modified;
+    public Instant getUpdated() {
+        return updated;
     }
 
     public BaseEntity setId(Long id) {
@@ -38,8 +38,8 @@ public class BaseEntity {
         return this;
     }
 
-    public BaseEntity setModified(Instant modified) {
-        this.modified = modified;
+    public BaseEntity setUpdated(Instant modified) {
+        this.updated = modified;
         return this;
     }
 
@@ -48,7 +48,7 @@ public class BaseEntity {
         return "BaseEntity{" +
                 "id=" + id +
                 ", created=" + created +
-                ", modified=" + modified +
+                ", modified=" + updated +
                 '}';
     }
 }
