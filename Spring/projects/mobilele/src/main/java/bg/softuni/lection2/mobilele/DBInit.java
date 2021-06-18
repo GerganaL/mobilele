@@ -1,19 +1,17 @@
 package bg.softuni.lection2.mobilele;
 
-import bg.softuni.lection2.mobilele.model.entites.BaseEntity;
-import bg.softuni.lection2.mobilele.model.entites.BrandEntity;
-import bg.softuni.lection2.mobilele.model.entites.ModelEntity;
-import bg.softuni.lection2.mobilele.model.entites.OfferEntity;
+import bg.softuni.lection2.mobilele.model.entites.*;
 import bg.softuni.lection2.mobilele.model.entites.enums.EngineEnum;
 import bg.softuni.lection2.mobilele.model.entites.enums.ModelCategoryEnum;
 import bg.softuni.lection2.mobilele.model.entites.enums.TransmitionEnum;
 import bg.softuni.lection2.mobilele.repository.BrandRepository;
 import bg.softuni.lection2.mobilele.repository.ModelRepository;
 import bg.softuni.lection2.mobilele.repository.OfferRepository;
+import bg.softuni.lection2.mobilele.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -24,11 +22,17 @@ public class DBInit implements CommandLineRunner {
     private final ModelRepository modelRepository;
     private final BrandRepository brandRepository;
     private final OfferRepository offerRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public DBInit(ModelRepository modelRepository, BrandRepository brandRepository, OfferRepository offerRepository) {
+    public DBInit(ModelRepository modelRepository, BrandRepository brandRepository,
+                  OfferRepository offerRepository, UserRepository userRepository,
+                  PasswordEncoder passwordEncoder) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
         this.offerRepository = offerRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -48,6 +52,19 @@ public class DBInit implements CommandLineRunner {
         initEscort(fordBrand);
       initNC750S(hondaBrand);
       createFiestaOffer(fiestaModel);
+
+      initAdmin();
+    }
+
+    private void initAdmin(){
+        UserEntity admin = new UserEntity();
+        admin
+                .setFirstName("Peter")
+                .setLastName("Dimitrov")
+                .setUsername("admin")
+                .setPassword(passwordEncoder.encode("topsecret"));
+        setCurrentTimestamps(admin);
+        userRepository.save(admin);
     }
 
     private void createFiestaOffer(ModelEntity model){

@@ -10,6 +10,7 @@ import java.util.Set;
 public class UserEntity extends BaseEntity {
 
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private Boolean isActive;
@@ -23,6 +24,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
         return this;
     }
 
@@ -75,11 +85,12 @@ public class UserEntity extends BaseEntity {
     public String toString() {
         return "UserEntity{" +
                 "username='" + username + '\'' +
+                ", password='N/A" +'\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", isActive=" + isActive +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", userRoles=" + userRoles +
-                "} " + super.toString();
+                "}";
     }
 }
