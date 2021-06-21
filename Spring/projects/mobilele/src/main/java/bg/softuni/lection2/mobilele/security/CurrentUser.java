@@ -27,6 +27,10 @@ public class CurrentUser {
         return isAnonymous;
     }
 
+    public boolean isLoggedIn(){
+        return  !isAnonymous;
+    }
+
     public CurrentUser setAnonymous(boolean anonymous) {
         if(anonymous){
             this.name = ANONYMOUS;
