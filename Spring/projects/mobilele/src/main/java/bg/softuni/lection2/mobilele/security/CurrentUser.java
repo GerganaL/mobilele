@@ -8,7 +8,7 @@ import org.springframework.web.context.annotation.SessionScope;
 public class CurrentUser {
     private static final String ANONYMOUS = "anonymous";
     private String name = ANONYMOUS;
-    private boolean isAnonymous;
+    private boolean isAnonymous = true;
 
     public static String getANONYMOUS() {
         return ANONYMOUS;
