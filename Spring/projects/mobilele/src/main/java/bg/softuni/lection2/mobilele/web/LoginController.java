@@ -27,9 +27,15 @@ public class LoginController {
         if (userService.authenticate(model.getUsername(), model.getPassword())) {
             userService.loginUser(model.getUsername());
             return "redirect:/";
-        }else {
+        } else {
             return "redirect:/users/login";
         }
+    }
+
+    @PostMapping("/users/logout")
+    public String logout() {
+        userService.logoutCurrentUser();
+        return "redirect:/";
     }
 
 }
