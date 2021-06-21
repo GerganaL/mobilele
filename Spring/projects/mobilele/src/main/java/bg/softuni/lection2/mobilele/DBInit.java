@@ -4,10 +4,8 @@ import bg.softuni.lection2.mobilele.model.entites.*;
 import bg.softuni.lection2.mobilele.model.entites.enums.EngineEnum;
 import bg.softuni.lection2.mobilele.model.entites.enums.ModelCategoryEnum;
 import bg.softuni.lection2.mobilele.model.entites.enums.TransmitionEnum;
-import bg.softuni.lection2.mobilele.repository.BrandRepository;
-import bg.softuni.lection2.mobilele.repository.ModelRepository;
-import bg.softuni.lection2.mobilele.repository.OfferRepository;
-import bg.softuni.lection2.mobilele.repository.UserRepository;
+import bg.softuni.lection2.mobilele.model.entites.enums.UserRoleEnum;
+import bg.softuni.lection2.mobilele.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class DBInit implements CommandLineRunner {
@@ -24,15 +23,17 @@ public class DBInit implements CommandLineRunner {
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRoleRepository userRoleRepository;
 
     public DBInit(ModelRepository modelRepository, BrandRepository brandRepository,
                   OfferRepository offerRepository, UserRepository userRepository,
-                  PasswordEncoder passwordEncoder) {
+                  PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userRoleRepository = userRoleRepository;
     }
 
 
@@ -53,18 +54,34 @@ public class DBInit implements CommandLineRunner {
       initNC750S(hondaBrand);
       createFiestaOffer(fiestaModel);
 
-      initAdmin();
+      initUsers();
     }
 
-    private void initAdmin(){
+    private void   initUsers(){
+        UserRoleEntity adminRole = new UserRoleEntity().setRole(UserRoleEnum.ADMIN);
+        UserRoleEntity userRole = new UserRoleEntity().setRole(UserRoleEnum.USER);
+
+        userRoleRepository.saveAll(List.of(adminRole,userRole));
+
         UserEntity admin = new UserEntity();
         admin
-                .setFirstName("Peter")
+                .setFirstName("Kiril")
                 .setLastName("Dimitrov")
                 .setUsername("admin")
-                .setPassword(passwordEncoder.encode("topsecret"));
+                .setPassword(passwordEncoder.encode("topsecret"))
+                .setUserRoles(Set.of(adminRole,userRole));
         setCurrentTimestamps(admin);
-        userRepository.save(admin);
+
+        UserEntity pesho = new UserEntity();
+        pesho
+                .setFirstName("Peter")
+                .setLastName("Ivanov")
+                .setUsername("pesho")
+                .setPassword(passwordEncoder.encode("topsecret"))
+                .setUserRoles(Set.of(userRole));
+        setCurrentTimestamps(pesho);
+
+        userRepository.saveAll(List.of(admin,pesho));
     }
 
     private void createFiestaOffer(ModelEntity model){
