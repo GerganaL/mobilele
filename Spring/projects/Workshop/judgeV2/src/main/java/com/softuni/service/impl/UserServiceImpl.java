@@ -69,4 +69,9 @@ public class UserServiceImpl implements UserService {
             userRepository.save(userEntity);
         }
     }
+
+    @Override
+    public UserEntity findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
 }

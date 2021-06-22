@@ -1,6 +1,7 @@
 package com.softuni.service;
 
 import com.softuni.models.entity.RoleNameEnum;
+import com.softuni.models.entity.UserEntity;
 import com.softuni.models.service.UserServiceModel;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface UserService {
     List<String> findAllUsernames();
 
     void changeRole(String username, RoleNameEnum roleNameEnum);
+
+    UserEntity findById(Long id);
 }

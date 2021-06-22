@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "exercises")
 public class ExerciseEntity extends BaseEntity{
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
     @Column(name = "started_on")
     private LocalDateTime startedOn;
