@@ -9,9 +9,7 @@ import bg.softuni.lection2.mobilele.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
@@ -41,27 +39,25 @@ public class DBInit implements CommandLineRunner {
     public void run(String... args) throws Exception {
         BrandEntity fordBrand = new BrandEntity();
         fordBrand.setName("Ford");
-        setCurrentTimestamps(fordBrand);
 
         BrandEntity hondaBrand = new BrandEntity();
         hondaBrand.setName("Honda");
-        setCurrentTimestamps(hondaBrand);
 
         brandRepository.saveAll(List.of(fordBrand, hondaBrand));
 
         ModelEntity fiestaModel = initFiesta(fordBrand);
         initEscort(fordBrand);
-      initNC750S(hondaBrand);
-      createFiestaOffer(fiestaModel);
+        initNC750S(hondaBrand);
+        createFiestaOffer(fiestaModel);
 
-      initUsers();
+        initUsers();
     }
 
-    private void   initUsers(){
+    private void initUsers() {
         UserRoleEntity adminRole = new UserRoleEntity().setRole(UserRoleEnum.ADMIN);
         UserRoleEntity userRole = new UserRoleEntity().setRole(UserRoleEnum.USER);
 
-        userRoleRepository.saveAll(List.of(adminRole,userRole));
+        userRoleRepository.saveAll(List.of(adminRole, userRole));
 
         UserEntity admin = new UserEntity();
         admin
@@ -69,9 +65,7 @@ public class DBInit implements CommandLineRunner {
                 .setLastName("Dimitrov")
                 .setUsername("admin")
                 .setPassword(passwordEncoder.encode("topsecret"))
-                .setUserRoles(Set.of(adminRole,userRole));
-        setCurrentTimestamps(admin);
-
+                .setUserRoles(Set.of(adminRole, userRole));
         UserEntity pesho = new UserEntity();
         pesho
                 .setFirstName("Peter")
@@ -79,12 +73,11 @@ public class DBInit implements CommandLineRunner {
                 .setUsername("pesho")
                 .setPassword(passwordEncoder.encode("topsecret"))
                 .setUserRoles(Set.of(userRole));
-        setCurrentTimestamps(pesho);
 
-        userRepository.saveAll(List.of(admin,pesho));
+        userRepository.saveAll(List.of(admin, pesho));
     }
 
-    private void createFiestaOffer(ModelEntity model){
+    private void createFiestaOffer(ModelEntity model) {
         OfferEntity fiestaOffer = new OfferEntity();
         fiestaOffer.setEngine(EngineEnum.GASOLINE)
                 .setImageUrl("https://media.autoexpress.co.uk/image/private/s--X-WVjvBW--/f_auto,t_content-image-full-desktop@1/v1562244788/autoexpress/2017/07/dsc_1328-1.jpg")
@@ -94,7 +87,6 @@ public class DBInit implements CommandLineRunner {
                 .setDescription("Karana e ot nemska baba. Zimata v garaj")
                 .setTransmission(TransmitionEnum.MANUAL)
                 .setModel(model);
-        setCurrentTimestamps(fiestaOffer);
 
         offerRepository.save(fiestaOffer);
     }
@@ -109,10 +101,9 @@ public class DBInit implements CommandLineRunner {
                 .setStartYear(1976)
                 .setBrand(brand);
 
-        setCurrentTimestamps(fiesta);
-
         return modelRepository.save(fiesta);
     }
+
     private ModelEntity initEscort(BrandEntity brand) {
         ModelEntity escort = new ModelEntity();
 
@@ -124,10 +115,9 @@ public class DBInit implements CommandLineRunner {
                 .setEndYear(2002)
                 .setBrand(brand);
 
-        setCurrentTimestamps(escort);
-
         return modelRepository.save(escort);
     }
+
     private ModelEntity initNC750S(BrandEntity brand) {
         ModelEntity nc750s = new ModelEntity();
 
@@ -138,14 +128,6 @@ public class DBInit implements CommandLineRunner {
                 .setStartYear(2014)
                 .setBrand(brand);
 
-        setCurrentTimestamps(nc750s);
-
         return modelRepository.save(nc750s);
-    }
-
-    private static void setCurrentTimestamps(BaseEntity baseEntity) {
-        baseEntity
-                .setCreated(Instant.now())
-                .setUpdated(Instant.now());
     }
 }

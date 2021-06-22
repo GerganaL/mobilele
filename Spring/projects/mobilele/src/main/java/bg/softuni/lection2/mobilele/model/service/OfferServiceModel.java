@@ -1,33 +1,39 @@
-package bg.softuni.lection2.mobilele.model.entites;
+package bg.softuni.lection2.mobilele.model.service;
+
 import bg.softuni.lection2.mobilele.model.entites.enums.EngineEnum;
 import bg.softuni.lection2.mobilele.model.entites.enums.TransmitionEnum;
+import bg.softuni.lection2.mobilele.model.validation.YearInPastOrPresent;
 
-import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "offers")
-public class OfferEntity extends BaseEntity {
-    @Enumerated(EnumType.STRING)
+public class OfferServiceModel {
+    @NotNull
     private EngineEnum engine;
+    @NotNull
     private String imageUrl;
-    private int mileage;
+    @NotNull
+   @Positive
+    private Integer mileage;
+    @NotNull
+    @DecimalMin("100")
     private BigDecimal price;
-    private int year;
+    @YearInPastOrPresent(minYear = 1930)
+    private Integer year;
+    @NotEmpty
+    @Size(min = 10, max = 512)
     private String description;
-    @Enumerated(EnumType.STRING)
+    @NotNull
     private TransmitionEnum transmission;
-    @ManyToOne
-    private ModelEntity model;
+    @NotNull
+    private long modelId;
 
-    @ManyToOne
-    private UserEntity user;
 
     public EngineEnum getEngine() {
         return engine;
     }
 
-    public OfferEntity setEngine(EngineEnum engine) {
+    public OfferServiceModel setEngine(EngineEnum engine) {
         this.engine = engine;
         return this;
     }
@@ -36,16 +42,16 @@ public class OfferEntity extends BaseEntity {
         return imageUrl;
     }
 
-    public OfferEntity setImageUrl(String imageUrl) {
+    public OfferServiceModel setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
         return this;
     }
 
-    public int getMileage() {
+    public Integer getMileage() {
         return mileage;
     }
 
-    public OfferEntity setMileage(int mileage) {
+    public OfferServiceModel setMileage(Integer mileage) {
         this.mileage = mileage;
         return this;
     }
@@ -54,16 +60,16 @@ public class OfferEntity extends BaseEntity {
         return price;
     }
 
-    public OfferEntity setPrice(BigDecimal price) {
+    public OfferServiceModel setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public OfferEntity setYear(int year) {
+    public OfferServiceModel setYear(Integer year) {
         this.year = year;
         return this;
     }
@@ -72,7 +78,7 @@ public class OfferEntity extends BaseEntity {
         return description;
     }
 
-    public OfferEntity setDescription(String description) {
+    public OfferServiceModel setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -81,41 +87,31 @@ public class OfferEntity extends BaseEntity {
         return transmission;
     }
 
-    public OfferEntity setTransmission(TransmitionEnum transmission) {
+    public OfferServiceModel setTransmission(TransmitionEnum transmission) {
         this.transmission = transmission;
         return this;
     }
 
-    public ModelEntity getModel() {
-        return model;
+    public long getModelId() {
+        return modelId;
     }
 
-    public OfferEntity setModel(ModelEntity model) {
-        this.model = model;
-        return this;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public OfferEntity setUser(UserEntity user) {
-        this.user = user;
+    public OfferServiceModel setModelId(long modelId) {
+        this.modelId = modelId;
         return this;
     }
 
     @Override
     public String toString() {
-        return "OfferEntity{" +
+        return "OfferServiceModel{" +
                 "engine=" + engine +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", mileage=" + mileage +
                 ", price=" + price +
                 ", year=" + year +
-                ", description=" + description +
+                ", description='" + description + '\'' +
                 ", transmission=" + transmission +
-                ", model=" + model +
-                ", user=" + user +
-                "} " + super.toString();
+                ", modelId=" + modelId +
+                '}';
     }
 }
