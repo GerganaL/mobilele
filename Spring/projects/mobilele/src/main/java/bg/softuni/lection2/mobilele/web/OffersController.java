@@ -9,10 +9,7 @@ import bg.softuni.lection2.mobilele.service.OfferService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -35,7 +32,8 @@ public class OffersController {
 
     @GetMapping("/all")
     public String getAllOffers(Model model){
-        model.addAttribute("models",offerService.getAllOffers());
+        //TODO
+      //  model.addAttribute("models",offerService.getAllOffers());
         return "offers";
     }
     @GetMapping("/add")
@@ -57,7 +55,19 @@ public class OffersController {
             return "redirect:/offers/add";
         }
 
-        offerService.save(offerModel);
+      long newOfferId = offerService.save(offerModel);
+        return "redirect:/offers/offer/" + newOfferId;
+    }
+
+    @GetMapping("/offer/{id}")
+    public String offerDetails(@PathVariable String id, Model model){
+        model.addAttribute("id",id);
+        return "details";
+    }
+
+    @DeleteMapping("/offer/{id}")
+    public String delete(@PathVariable Long id, Model model){
+       offerService.delete(id);
         return "redirect:/offers/all";
     }
 }
