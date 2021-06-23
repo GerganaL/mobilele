@@ -8,10 +8,14 @@ import bg.softuni.lection2.mobilele.service.BrandService;
 import bg.softuni.lection2.mobilele.service.OfferService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/offers")
@@ -44,8 +48,14 @@ public class OffersController {
     }
 
     @PostMapping("/add")
-    public String addOfferConfirm(@ModelAttribute OfferServiceModel offerModel){
-       //TODO validation
+    public String addOfferConfirm(@Valid @ModelAttribute OfferServiceModel offerModel,
+                                  BindingResult bindingResult, RedirectAttributes redirectAttributes){
+
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("offerModel",offerModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerModel",bindingResult);
+            return "redirect:/offers/add";
+        }
 
         offerService.save(offerModel);
         return "redirect:/offers/all";
