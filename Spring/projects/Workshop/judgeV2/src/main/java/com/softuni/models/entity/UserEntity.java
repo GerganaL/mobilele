@@ -2,10 +2,8 @@ package com.softuni.models.entity;
 
 import org.springframework.stereotype.Controller;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -20,6 +18,8 @@ public class UserEntity extends BaseEntity {
     private String git;
     @ManyToOne
     private RoleEntity role;
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+    private Set<HomeworkEntity> homeworkSet;
 
     public UserEntity() {
     }
@@ -62,5 +62,14 @@ public class UserEntity extends BaseEntity {
 
     public void setRole(RoleEntity role) {
         this.role = role;
+    }
+
+    public Set<HomeworkEntity> getHomeworkSet() {
+        return homeworkSet;
+    }
+
+    public UserEntity setHomeworkSet(Set<HomeworkEntity> homeworkSet) {
+        this.homeworkSet = homeworkSet;
+        return this;
     }
 }

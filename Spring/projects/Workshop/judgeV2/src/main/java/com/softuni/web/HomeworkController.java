@@ -30,8 +30,8 @@ public class HomeworkController {
     }
 
     @GetMapping("/add")
-    public String add(Model model){
-        if(!model.containsAttribute("homeworkAddBindingModel")) {
+    public String add(Model model) {
+        if (!model.containsAttribute("homeworkAddBindingModel")) {
             model.addAttribute("homeworkAddBindingModel", new HomeworkAddBindingModel());
             model.addAttribute("isLate", false);
         }
@@ -42,20 +42,20 @@ public class HomeworkController {
     @PostMapping("/add")
     public String addConfirm(@Valid HomeworkAddBindingModel homeworkAddBindingModel,
                              BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                             @RequestParam String exercise, @RequestParam String gitAddress){
-        if(bindingResult.hasErrors()){
+                             @RequestParam String exercise, @RequestParam String gitAddress) {
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("homeworkAddBindingModel", homeworkAddBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.homeworkAddBindingModel",homeworkAddBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.homeworkAddBindingModel", homeworkAddBindingModel);
             return "redirect:add";
         }
 
         boolean isLate = exerciseService.checkIsLate(homeworkAddBindingModel.getExercise());
-        if(isLate){
+        if (isLate) {
             redirectAttributes.addFlashAttribute("homeworkAddBindingModel", homeworkAddBindingModel);
             redirectAttributes.addFlashAttribute("isLate", true);
         }
 
-        homeworkService.addHomework(homeworkAddBindingModel.getExercise(),homeworkAddBindingModel.getGitAddress());
+        homeworkService.addHomework(homeworkAddBindingModel.getExercise(), homeworkAddBindingModel.getGitAddress());
 
         return "redirect:/";
     }
